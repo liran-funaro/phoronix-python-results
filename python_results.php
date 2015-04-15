@@ -102,9 +102,9 @@ class python_results extends pts_module_interface
 		            $res .= self::get_dict_item("min",min($values));
 		            $res .= self::get_dict_item("max",max($values));
 		            
-		            $std_div = 0
+		            $std_div = 0;
 	                if($values_count > 1) {
-    	                $std_div = pts_math::percent_standard_deviation($values)
+    	                $std_div = pts_math::percent_standard_deviation($values);
 	                }
 	                $res .= self::get_dict_item("std-dev",$std_div);
 	            }
