@@ -63,9 +63,9 @@ class python_results extends pts_module_interface
 		}
 		
 	    // Do the actual running
-		if(pts_test_run_manager::initial_checks($to_run, $flags))
+		if(timed_test_run_manager::initial_checks($to_run, $flags))
 		{
-			$test_run_manager = new pts_test_run_manager($flags);
+			$test_run_manager = new timed_test_run_manager($flags);
 
 			if($test_run_manager->load_tests_to_run($to_run))
   			{
