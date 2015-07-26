@@ -28,6 +28,7 @@ class python_results extends pts_module_interface
 	const module_description = "Display's python readable results";
 	const module_author = 'Liran Funaro';
 	const tab = '    ';
+	const result_list_wrapper = '########## RESULT-LIST ##########';
 
 	public static function module_info()
 	{
@@ -44,12 +45,10 @@ class python_results extends pts_module_interface
 
 	public static function run_command($to_run)
 	{
-	    echo "[" . "'''" . PHP_EOL;
-	    
 		self::install_tests_to_run($to_run);
 		$results_list = self::run_tests($to_run);
 		
-		echo "'''," . PHP_EOL . $results_list . "]" . PHP_EOL;
+		echo PHP_EOL . python_results::result_list_wrapper . PHP_EOL . $results_list . PHP_EOL . python_results::result_list_wrapper . PHP_EOL;
 	}
 	
 	public static function run_tests($to_run)
