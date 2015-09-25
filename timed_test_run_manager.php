@@ -572,11 +572,11 @@ class timed_test_run_manager extends pts_test_run_manager
 
 		$test_run_request = $this->get_test_to_run($run_index);
 
-		if(($run_index != 0 && count(pts_file_io::glob($test_run_request->test_profile->get_install_dir() . 'cache-share-*.pt2so')) == 0))
-		{
-			// Sleep for six seconds between tests by default
-			sleep(6);
-		}
+// 		if(($run_index != 0 && count(pts_file_io::glob($test_run_request->test_profile->get_install_dir() . 'cache-share-*.pt2so')) == 0))
+// 		{
+// 			// Sleep for six seconds between tests by default
+// 			sleep(6);
+// 		}
 		
 		$time_to_execute_sec = (($t = pts_client::read_env('TIME_TO_EXECUTE_SEC')) && is_numeric($t) && $t > 0) ? $t : false;
 		timed_test_execution::run_test($this, $test_run_request, $time_to_execute_sec);

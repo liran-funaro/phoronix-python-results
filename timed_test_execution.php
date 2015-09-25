@@ -43,7 +43,7 @@ class timed_test_execution //extends pts_test_execution
 			return false;
 		}
 
-		$test_run_request->test_result_buffer = new pts_test_result_buffer();
+		$test_run_request->test_result_buffer = new pts_timed_test_result_buffer();
 		$execute_binary = $test_run_request->test_profile->get_test_executable();
 		$times_to_run = $test_run_request->test_profile->get_times_to_run();
 		$ignore_runs = $test_run_request->test_profile->get_runs_to_ignore();
@@ -143,6 +143,9 @@ class timed_test_execution //extends pts_test_execution
 				unset($cache_share);
 			}
 
+			$test_run_time_start = null;
+			$test_run_time = null;
+			
 			if($restored_from_cache == false)
 			{
 				$test_run_command = 'cd ' . $to_execute . ' && ' . $execute_binary_prepend . './' . $execute_binary . ' ' . $pts_test_arguments . ' 2>&1';
@@ -167,7 +170,6 @@ class timed_test_execution //extends pts_test_execution
 				$monitor_result = $is_monitoring ? pts_test_result_parser::system_monitor_task_post_test($test_run_request->test_profile) : 0;
 			}
 		
-
 			if(!isset($test_result[10240]) || (pts_c::$test_flags & pts_c::debug_mode))
 			{
 				pts_client::$display->test_run_instance_output($test_result);
@@ -236,7 +238,7 @@ class timed_test_execution //extends pts_test_execution
 					}
 					else if ($time_test_should_end == false || $time_test_should_end > time())
 					{
-						$test_run_request->test_result_buffer->add_test_result(null, $test_run_request->active_result, null, null, $test_run_request->active_min_result, $test_run_request->active_max_result);
+						$test_run_request->test_result_buffer->add_test_result(null, $test_run_request->active_result, null, null, $test_run_request->active_min_result, $test_run_request->active_max_result, $test_run_time_start, $test_run_time);
 					}
 				}
 				else if($test_run_request->test_profile->get_display_format() != 'NO_RESULT')
@@ -310,7 +312,7 @@ class timed_test_execution //extends pts_test_execution
 				if($cache_share_present == false)
 				{
 					pts_tests::call_test_script($test_run_request->test_profile, 'interim', 'Running Interim Test Script', $test_directory, $extra_runtime_variables, true);
-					sleep(2); // Rest for a moment between tests
+// 					sleep(2); // Rest for a moment between tests
 				}
 
 				pts_module_manager::module_process('__interim_test_run', $test_run_request);

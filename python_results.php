@@ -96,7 +96,9 @@ class python_results extends pts_module_interface
 		        $values_count = count($values);
 		        
 		        if($values_count > 0) {
-		            $res .= self::get_dict_item("all-results",$values);				    
+		            $res .= self::get_dict_item("all-results",$values);
+		            $res .= self::get_dict_item("all-results-start-times", $test_result->test_result_buffer->get_start_times());
+		            $res .= self::get_dict_item("all-results-duration", $test_result->test_result_buffer->get_duration_times());
 		            $res .= self::get_dict_item("avg",array_sum($values) / $values_count);
 		            $res .= self::get_dict_item("min",min($values));
 		            $res .= self::get_dict_item("max",max($values));
